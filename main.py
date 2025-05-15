@@ -1,5 +1,6 @@
 # do this https://classroom.emeritus.org/courses/9296/assignments/218600?module_item_id=1556656#
 
+import re
 import urllib.request
 import time
 import glob, os
@@ -61,7 +62,8 @@ def catalog():
         # use everything after as the file name for use by the store function
         index = url.rfind('/') + 1
         file = url[index:]
-        print(file)
+        print('index: ', index)
+        print('file: ', file)
         store(data, file)
 
 # a function to determine the encoding of a website
@@ -73,3 +75,4 @@ def get_encoding(url):
         encoding = detected['encoding']
         return encoding
 
+catalog()
