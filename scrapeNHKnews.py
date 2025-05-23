@@ -2,10 +2,13 @@ from bs4 import BeautifulSoup
 import requests
 import neologdn
 import re
+
+from mongoDBCreate import initialize_mongo
 from urllib.parse import urljoin
 from datetime import datetime
 
 debug = False
+homepage = 'https://www3.nhk.or.jp/news/'
 
 #site map for news articles of the last 3 days
 #probably a smarter way to pull the links
@@ -83,22 +86,22 @@ def extract_text(articles):
                     'url': url,
                     'scraped_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
                 })
-                if debug == True:
+                if debug:
                     print(f"Article_title: {article_title}\nDate: {article_datetime}\n"
                           f"Text: {normalized_text}\nTag: <{tag.name}>\n"
                           f"Class: {class_}\nParent class: {parent_class}\n---")
     return content
 
-def scrape_NHK(homepage):
+def scrape_NHK():
     articles = list_articles(homepage)
     content = extract_text(articles)
-
-    return(content)
+    initialize_mongo(content)
 
 if False:
     # pull the text from all articles
     for article in articles:
         text = extract_text(article[1])
+
         print(text)
 
     # extract only the kanji
@@ -107,3 +110,6 @@ if False:
         kanji = re.findall(r'[\u4e00-\u9faf]+', text)
         print(text)
         print(kanji)
+
+if __name__ == "__main__":
+    scrape_NHK()
