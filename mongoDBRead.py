@@ -1,14 +1,23 @@
+import os
 from pymongo import MongoClient
 
-# make a connection
-client = MongoClient('mongodb://localhost:27017')
+def read_mongo():
+    # Connect to the MongoDB dynamically in container vs debugging locally in PyCharm
+    mongo_host = os.getenv('MONGO_HOST', 'localhost')
+    client = MongoClient(f'mongodb://{mongo_host}:27017')
 
-# get database
-db = client['NHK_articles']
+    # get the database
+    db = client['NHK_articles']
 
-# get collection
-documents = db.NHK_articles
+    # get collection
+    collection  = db['NHK_articles']
 
-# walk through all posts
-for document in documents.find():
-    print(document)
+    # return documents
+    return collection.find()
+
+if __name__ == "__main__":
+    documents = read_mongo()
+
+    # walk through all posts
+    for document in documents:
+        print(document)

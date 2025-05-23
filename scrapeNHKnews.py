@@ -95,21 +95,7 @@ def extract_text(articles):
 def scrape_NHK():
     articles = list_articles(homepage)
     content = extract_text(articles)
-    initialize_mongo(content)
-
-if False:
-    # pull the text from all articles
-    for article in articles:
-        text = extract_text(article[1])
-
-        print(text)
-
-    # extract only the kanji
-    for article in articles:
-        text = article.text
-        kanji = re.findall(r'[\u4e00-\u9faf]+', text)
-        print(text)
-        print(kanji)
+    #initialize_mongo(content)
 
 if __name__ == "__main__":
     scrape_NHK()
