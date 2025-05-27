@@ -3,7 +3,7 @@ import requests
 import neologdn
 import re
 
-from mongoDBCreate import initialize_mongo
+from mongoDBCreate import load_mongo
 from urllib.parse import urljoin
 from datetime import datetime
 
@@ -95,7 +95,7 @@ def extract_text(articles):
 def scrape_NHK():
     articles = list_articles(homepage)
     content = extract_text(articles)
-    #initialize_mongo(content)
+    load_mongo(content)
 
 if __name__ == "__main__":
     scrape_NHK()

@@ -36,22 +36,22 @@ with DAG(
     t2 = PythonOperator(
         task_id='task_two',
         depends_on_past=False,
-        python_callable=combine
+        python_callable=get_kanji
     )
     t3 = PythonOperator(
         task_id='task_three',
         depends_on_past=False,
-        python_callable=titles
+        python_callable=load_SQL
     )
     t4 = PythonOperator(
         task_id='task_four',
         depends_on_past=False,
-        python_callable=clean
+        python_callable=generate_visualization
     )
     t5 = PythonOperator(
         task_id='task_five',
         depends_on_past=False,
-        python_callable=count_words
+        python_callable=
     )
 
     # Task Dependencies (execution order)
