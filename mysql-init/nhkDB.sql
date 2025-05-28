@@ -4,19 +4,14 @@ COLLATE = utf8mb4_unicode_ci;
 
 USE NHKdb;
 
-DROP TABLE IF EXISTS nhk_articles;
-
-CREATE TABLE nhk_articles (
+CREATE TABLE IF NOT EXISTS kanji_count (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	mongo_id char(24) NOT NULL UNIQUE,
-	article_title TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-	published_on DATETIME NOT NULL,
-	text MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-	tag VARCHAR(255),
-	class VARCHAR(255),
-	parent_class VARCHAR(255),
-	url VARCHAR(255) NOT NULL,
-	scraped_at DATETIME NOT NULL,
-	transformed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	FULLTEXT INDEX ft_text (text)
+	kanji VARCHAR(64) NOT NULL UNIQUE,
+	count INT
+);
+
+CREATE TABLE IF NOT EXISTS metadata (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	last_processed_id VARCHAR(64) NOT NULL,
+	processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

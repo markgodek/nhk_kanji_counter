@@ -3,7 +3,7 @@ import requests
 import neologdn
 import re
 
-from mongoDBCreate import load_mongo
+from load_mongo import load_mongo
 from urllib.parse import urljoin
 from datetime import datetime
 
