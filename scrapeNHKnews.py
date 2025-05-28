@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 import neologdn
-import re
 
 from load_mongo import load_mongo
 from urllib.parse import urljoin
