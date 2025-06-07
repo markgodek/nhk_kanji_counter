@@ -43,26 +43,28 @@
 
 x-airflow-common:
   &airflow-common
-  image: apache/airflow:2.9.1
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: nhk-airflow-custom:latest
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: mysql+mysqlconnector://root:MyNewPass@mysql:3306/NHKdb
-    AIRFLOW__CELERY__RESULT_BACKEND: db+mysql+mysqlconnector://root:MyNewPass@mysql:3306/NHKdb
+    AIRFLOW__CELERY__RESULT_BACKEND: db+mysql+mysqlconnector://root:3306/NHKdb
     AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
   volumes:
-    - ./dags:/opt/airflow/dags
-    - ./logs:/opt/airflow/logs
-    - ./plugins:/opt/airflow/plugins
+    - ./airflow:/opt/airflow
   depends_on:
     redis:
       condition: service_healthy
     mysql:
       condition: service_healthy
+
 
 services:
   mysql:
@@ -112,24 +114,23 @@ services:
     ports:
       - 8080:8080
     environment:
-      - PROJECT_PATH=/opt/airflow
-      - MONGO_HOST=nhk-mongo
+      <<: *airflow-common-env
+      PROJECT_PATH: /opt/airflow
+      MONGO_HOST: nhk-mongo
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 10s
       timeout: 10s
       retries: 5
     restart: always
-    volumes:
-      - ./airflow/dags:/opt/airflow/dags
-      - ./scrapeNHKnews.py:/opt/airflow/scrapeNHKnews.py      
 
   airflow-scheduler:
     <<: *airflow-common
     container_name: nhk-airflow-scheduler
     command: scheduler
     environment:
-      - PROJECT_PATH=/opt/airflow
+      <<: *airflow-common-env
+      PROJECT_PATH: /opt/airflow
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"']
       interval: 10s
@@ -142,7 +143,8 @@ services:
     container_name: nhk-airflow-worker
     command: celery worker
     environment:
-      - PROJECT_PATH=/opt/airflow
+      <<: *airflow-common-env
+      PROJECT_PATH: /opt/airflow
     healthcheck:
       test:
         - "CMD-SHELL"
@@ -155,13 +157,13 @@ services:
   airflow-init:
     <<: *airflow-common
     container_name: nhk-airflow-init
-    command: version
+    command: >
+      bash -c "
+      airflow db upgrade &&
+      airflow users create --username airflow --password airflow --firstname Air --lastname Flow --role Admin --email airflow@example.com
+      "
     environment:
       <<: *airflow-common-env
-      _AIRFLOW_DB_UPGRADE: 'true'
-      _AIRFLOW_WWW_USER_CREATE: 'true'
-      _AIRFLOW_WWW_USER_USERNAME: airflow
-      _AIRFLOW_WWW_USER_PASSWORD: airflow
 
   mongo-express:
     image: mongo-express
@@ -175,3 +177,4 @@ services:
 volumes:
   mysql-data:
   mongo-data:
+
