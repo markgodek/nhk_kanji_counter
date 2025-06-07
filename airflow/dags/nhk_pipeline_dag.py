@@ -24,11 +24,6 @@ with DAG(
     # INSTALL BS4 BY HAND THEN CALL FUNCTION
 
     # ts are tasks
-    t0 = BashOperator(
-        task_id='task_zero',
-        bash_command='pip install beautifulsoup4',
-        retries=2
-    )
     t1 = PythonOperator(
         task_id='task_one',
         depends_on_past=False,
@@ -41,4 +36,4 @@ with DAG(
     )
 
     # Task Dependencies (execution order)
-    t0 >> t1 >> t2# >> t3 >> t4 >> t5
+    t1 >> t2# >> t3 >> t4 >> t5
