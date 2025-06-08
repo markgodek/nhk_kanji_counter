@@ -6,8 +6,10 @@ from pymongo import MongoClient
 
 def load_mongo(content):
     # Connect to the MongoDB dynamically in container vs debugging locally in PyCharm
+    mongo_user = os.getenv('MONGO_USER', 'mongo')
+    mongo_pass = os.getenv('MONGO_PASS', 'mongo')
     mongo_host = os.getenv('MONGO_HOST', 'localhost')
-    client = MongoClient(f'mongodb://{mongo_host}:27017')
+    client = MongoClient(f'mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:27017/')
 
     # Get or create the database
     db = client['NHK_articles']

@@ -40,6 +40,11 @@ def extract_text(articles):
         url = article[1]
         soup = get_response(url)
 
+        # Remove hidden elements
+        for selector in ['[aria-hidden="true"]', '[style*="display:none"]', '.hidden', 'script', 'style', 'noscript']:
+            for tag in soup.select(selector):
+                tag.decompose()
+
         # Try to scrape the page first
         main_section = soup.find('section', class_='module--detail-content')
         if main_section:

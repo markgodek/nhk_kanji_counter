@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY flask.requirements.txt flask.requirements.txt
+RUN pip install --no-cache-dir -r flask.requirements.txt
+
+COPY show_articles.py .
+
+ENV MONGO_HOST=nhk-mongo
+
+EXPOSE 5000
+
+CMD ["python", "show_articles.py"]
