@@ -195,6 +195,19 @@ services:
       - MONGO_HOST=nhk-mongo
     depends_on:
       - mongodb
+      
+  playwright:
+    container_name: nhk-playwright
+    build:
+      context: .
+      dockerfile: Dockerfile.playwright
+    volumes:
+      - ./airflow:/opt/airflow  # script location
+      - redis
+      - mysql
+      - mongodb
+    shm_size: 1g
+    restart: unless-stopped
         
 volumes:
   mysql-data:
