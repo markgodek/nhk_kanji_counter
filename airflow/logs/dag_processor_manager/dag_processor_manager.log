@@ -6176,3 +6176,49 @@ File Path                              PID    Runtime      # DAGs    # Errors  L
 /opt/airflow/dags/nhk_pipeline_dag.py                           1           0  0.72s           2025-06-09T19:12:44
 ================================================================================
 [2025-06-09T19:13:03.816+0000] {manager.py:452} INFO - Exiting gracefully upon receiving signal 15
+[2025-06-09T23:18:02.096+0000] {manager.py:470} INFO - Processing files using up to 2 processes at a time 
+[2025-06-09T23:18:02.102+0000] {manager.py:471} INFO - Process each file at most once every 30 seconds
+[2025-06-09T23:18:02.103+0000] {manager.py:472} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-06-09T23:18:02.108+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-06-09T23:18:02.151+0000] {manager.py:740} INFO - There are 1 files in /opt/airflow/dags
+[2025-06-09T23:18:02.359+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-------------------------------------  -----  ---------  --------  ----------  --------------  ----------
+/opt/airflow/dags/nhk_pipeline_dag.py     32  0.06s             0           0
+================================================================================
+[2025-06-09T23:18:32.495+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                              PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/nhk_pipeline_dag.py                           0           1  0.56s           2025-06-09T23:18:02
+================================================================================
+[2025-06-09T23:19:03.206+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                              PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/nhk_pipeline_dag.py                           0           1  0.23s           2025-06-09T23:18:33
+================================================================================
+[2025-06-09T23:19:33.610+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                              PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/nhk_pipeline_dag.py                           0           1  0.22s           2025-06-09T23:19:03
+================================================================================
+[2025-06-09T23:20:03.643+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                              PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/nhk_pipeline_dag.py                           1           0  0.65s           2025-06-09T23:19:34
+================================================================================
+[2025-06-09T23:20:15.967+0000] {manager.py:452} INFO - Exiting gracefully upon receiving signal 15

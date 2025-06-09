@@ -4,7 +4,6 @@ import neologdn
 
 from load_mongo import load_mongo
 from urllib.parse import urljoin
-from playwright.sync_api import sync_playwright
 from datetime import datetime
 
 debug = False
@@ -35,14 +34,16 @@ def list_articles(homepage):
     return articles
 
 #scrape this using playwright - https://www.nhk.or.jp/senkyo/shijiritsu/
-def scrape_with_playwright():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-        page.goto("https://www3.nhk.or.jp/news/")
-        content = page.content()
-        browser.close()
-        return content  # or parse + return structured data
+def scrape_with_playwright(url):
+    try:
+        response = requests.post("http://nhk-playwright:5010/render", json={"url": url}, timeout=30)
+        response.raise_for_status()
+        return response.json()  # list of dicts with 'text', 'tag', etc.
+    except Exception as e:
+        print(f"[!] Playwright fallback failed: {e}")
+        return []
+
+
 
 def extract_text(articles):
     content = []
@@ -92,27 +93,15 @@ def extract_text(articles):
                         'scraped_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
                     })
         else:
-            # Fallback: scrape all visible text nodes from soup.body
-            if soup.body:
-                for string in soup.body.find_all(string=True):
-                    text = string.strip()
-                    if text:
-                        normalized_text = neologdn.normalize(text)
-                        parent = string.parent
-                        tag_name = parent.name if parent else None
-                        class_ = ' '.join(parent.get('class')) if parent and parent.has_attr('class') else None
-                        parent_class = ' '.join(parent.find_parent().get('class')) if parent and parent.find_parent() and parent.find_parent().has_attr('class') else None
+            # Fallback: Use Playwright service to get visible rendered text
+            fallback_data = scrape_with_playwright(url)
+            for entry in fallback_data:
+                entry['article_title'] = None
+                entry['published'] = None
+                entry['url'] = url
+                entry['scraped_at'] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+                content.append(entry)
 
-                        content.append({
-                            'article_title': None,
-                            'published': None,
-                            'text': normalized_text,
-                            'tag': tag_name,
-                            'class': class_,
-                            'parent_class': parent_class,
-                            'url': url,
-                            'scraped_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
-                        })
     return content
 
 

@@ -202,12 +202,13 @@ services:
       context: .
       dockerfile: Dockerfile.playwright
     volumes:
-      - ./airflow:/opt/airflow  # script location
-      - redis
-      - mysql
-      - mongodb
+      - ./airflow:/opt/airflow
+    ports:
+      - "5010:5010"
     shm_size: 1g
     restart: unless-stopped
+    command: python /opt/airflow/playwright_api.py
+
         
 volumes:
   mysql-data:
