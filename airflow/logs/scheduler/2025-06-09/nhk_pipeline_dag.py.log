@@ -1965,3 +1965,81 @@ ModuleNotFoundError: No module named 'playwright'
 [2025-06-09T23:20:04.881+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:20:04.881+0000] {dag.py:3096} INFO - Sync 1 DAGs
 [2025-06-09T23:20:04.903+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:20:04.903+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-08 00:00:00+00:00, run_after=2025-06-09 00:00:00+00:00
 [2025-06-09T23:20:04.922+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.247 seconds
+[2025-06-09T23:21:49.960+0000] {processor.py:161} INFO - Started process (PID=33) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:21:49.962+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:21:49.964+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:21:49.964+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:21:50.271+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:21:50.516+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:21:50.515+0000] {override.py:1829} INFO - Created Permission View: can delete on DAG:kanji_counter
+[2025-06-09T23:21:50.527+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:21:50.527+0000] {override.py:1829} INFO - Created Permission View: can read on DAG:kanji_counter
+[2025-06-09T23:21:50.535+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:21:50.534+0000] {override.py:1829} INFO - Created Permission View: can edit on DAG:kanji_counter
+[2025-06-09T23:21:50.535+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:21:50.535+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:21:50.545+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:21:50.544+0000] {dag.py:3118} INFO - Creating ORM DAG for kanji_counter
+[2025-06-09T23:21:50.731+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:21:50.731+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-08 00:00:00+00:00, run_after=2025-06-09 00:00:00+00:00
+[2025-06-09T23:21:50.751+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.796 seconds
+[2025-06-09T23:22:20.989+0000] {processor.py:161} INFO - Started process (PID=56) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:22:20.990+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:22:20.993+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:22:20.992+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:22:21.223+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:22:21.291+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:22:21.290+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:22:21.324+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:22:21.324+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-09 00:00:00+00:00, run_after=2025-06-10 00:00:00+00:00
+[2025-06-09T23:22:21.351+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.371 seconds
+[2025-06-09T23:22:51.671+0000] {processor.py:161} INFO - Started process (PID=71) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:22:51.672+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:22:51.675+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:22:51.673+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:22:51.835+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:22:51.876+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:22:51.875+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:22:51.893+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:22:51.893+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-09 00:00:00+00:00, run_after=2025-06-10 00:00:00+00:00
+[2025-06-09T23:22:51.910+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.244 seconds
+[2025-06-09T23:23:22.077+0000] {processor.py:161} INFO - Started process (PID=86) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:23:22.078+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:23:22.080+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:23:22.080+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:23:22.231+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:23:22.274+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:23:22.273+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:23:22.292+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:23:22.292+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-09 00:00:00+00:00, run_after=2025-06-10 00:00:00+00:00
+[2025-06-09T23:23:22.311+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.239 seconds
+[2025-06-09T23:23:52.480+0000] {processor.py:161} INFO - Started process (PID=108) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:23:52.481+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:23:52.483+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:23:52.483+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:23:52.647+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:23:52.692+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:23:52.692+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:23:52.734+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:23:52.733+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-09 00:00:00+00:00, run_after=2025-06-10 00:00:00+00:00
+[2025-06-09T23:23:52.774+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.299 seconds
+[2025-06-09T23:24:22.942+0000] {processor.py:161} INFO - Started process (PID=123) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:24:22.943+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:24:22.945+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:24:22.945+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:24:23.096+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:24:23.136+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:24:23.136+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:24:23.154+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:24:23.153+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-09 00:00:00+00:00, run_after=2025-06-10 00:00:00+00:00
+[2025-06-09T23:24:23.174+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.238 seconds
+[2025-06-09T23:24:53.332+0000] {processor.py:161} INFO - Started process (PID=139) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:24:53.333+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:24:53.335+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:24:53.335+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:24:53.489+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:24:53.531+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:24:53.531+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:24:53.549+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:24:53.549+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-09 00:00:00+00:00, run_after=2025-06-10 00:00:00+00:00
+[2025-06-09T23:24:53.790+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.463 seconds
+[2025-06-09T23:25:23.986+0000] {processor.py:161} INFO - Started process (PID=162) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:25:23.987+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:25:23.989+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:25:23.989+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:25:24.133+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:25:24.172+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:25:24.172+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:25:24.336+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:25:24.335+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-09 00:00:00+00:00, run_after=2025-06-10 00:00:00+00:00
+[2025-06-09T23:25:24.353+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.372 seconds
+[2025-06-09T23:59:00.239+0000] {processor.py:161} INFO - Started process (PID=33) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:59:00.243+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:59:00.248+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:00.246+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:59:00.561+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:59:00.804+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:00.803+0000] {override.py:1829} INFO - Created Permission View: can edit on DAG:kanji_counter
+[2025-06-09T23:59:00.817+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:00.817+0000] {override.py:1829} INFO - Created Permission View: can delete on DAG:kanji_counter
+[2025-06-09T23:59:00.825+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:00.825+0000] {override.py:1829} INFO - Created Permission View: can read on DAG:kanji_counter
+[2025-06-09T23:59:00.826+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:00.825+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:59:00.842+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:00.840+0000] {dag.py:3118} INFO - Creating ORM DAG for kanji_counter
+[2025-06-09T23:59:01.071+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:01.071+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-08 00:00:00+00:00, run_after=2025-06-09 00:00:00+00:00
+[2025-06-09T23:59:01.090+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.857 seconds
+[2025-06-09T23:59:31.328+0000] {processor.py:161} INFO - Started process (PID=56) to work on /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:59:31.329+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/nhk_pipeline_dag.py for tasks to queue
+[2025-06-09T23:59:31.331+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:31.331+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:59:31.516+0000] {processor.py:840} INFO - DAG(s) 'kanji_counter' retrieved from /opt/airflow/dags/nhk_pipeline_dag.py
+[2025-06-09T23:59:31.562+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:31.562+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-06-09T23:59:31.582+0000] {logging_mixin.py:188} INFO - [2025-06-09T23:59:31.582+0000] {dag.py:3954} INFO - Setting next_dagrun for kanji_counter to 2025-06-08 00:00:00+00:00, run_after=2025-06-09 00:00:00+00:00
+[2025-06-09T23:59:31.605+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/nhk_pipeline_dag.py took 0.282 seconds

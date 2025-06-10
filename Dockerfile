@@ -10,7 +10,7 @@ RUN apt-get update && \
 
 USER airflow
 
-# Copy your requirements file (create this next)
+# Copy your requirements file
 COPY requirements.txt .
 
 # Install Python dependencies
