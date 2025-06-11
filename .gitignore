@@ -1,0 +1,6 @@
+
+.idea/
+
+# keep shared settings
+!.idea/codeStyles/
+!.idea/runConfigurations/
