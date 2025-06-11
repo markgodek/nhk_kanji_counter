@@ -67,7 +67,6 @@ def extract_text(articles):
         article_datetime = None
 
         if section_to_use:
-            print("Using static scraping")
             time_tag = section_to_use.find('time')
             article_datetime = time_tag.get('datetime') if time_tag and time_tag.has_attr('datetime') else None
 
@@ -94,7 +93,6 @@ def extract_text(articles):
                         'scraped_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
                     })
         else:
-            print("Using fallback scraping")
             # Fallback: Use Playwright service to get visible rendered text
             fallback_data = scrape_with_playwright(url)
             print(f"Type of fallback_data: {type(fallback_data)}")
@@ -111,7 +109,9 @@ def extract_text(articles):
 def scrape_NHK():
     articles = list_articles(homepage)
     content = extract_text(articles)
-    load_mongo(content)
+    for x in content:
+        print(x)
+    #load_mongo(content)
 
 if __name__ == "__main__":
     scrape_NHK()
