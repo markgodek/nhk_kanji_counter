@@ -1,13 +1,11 @@
-from bs4 import BeautifulSoup
-import requests
-import neologdn
+import os, requests, neologdn
 
 #from load_mongo import load_mongo
+from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from datetime import datetime, timezone
-from fallback_to_playwright import fallback_to_playwright
 
-debug = False
+PLAYWRIGHT_HOST = os.getenv("PLAYWRIGHT_HOST", "localhost")
 homepage = 'https://www3.nhk.or.jp/news/'
 
 #site map for news articles of the last 3 days
@@ -39,50 +37,66 @@ def list_articles(homepage):
             articles.append([normalized_text, full_url])
     return articles
 
+#scrape this using playwright - https://www.nhk.or.jp/senkyo/shijiritsu/
+def scrape_with_playwright(url):
+    try:
+        response = requests.post(f"http://{PLAYWRIGHT_HOST}:5010/scrape", json={"url": url}, timeout=30)
+        response.raise_for_status()
+        return response.json()  # list of dicts with 'text', 'tag', etc.
+    except Exception as e:
+        print(f"[!] Playwright fallback failed: {e}")
+        return []
 
-def scrape_with_beautifulsoup(url, soup):
+# takes a url and returns a content object with content scraped using beautiful soup
+# if the page lacks tags found in section_to_use, function falls back to scraping with scrape_with_playwright
+def scrape_article(url):
     content = []
     article_title = ''
+    article_datetime = None
 
-    # Remove hidden or irrelevant elements
-    for selector in ['[aria-hidden="true"]', '[style*="display:none"]', '.hidden', 'script', 'style', 'noscript']:
-        for tag in soup.select(selector):
-            tag.decompose()
+    soup = get_response(url)
 
-    # Get the date of publication
-    time_tag = soup.find('time')
-    if time_tag and time_tag.has_attr('datetime'):
-        try:
-            parsed_dt = datetime.fromisoformat(time_tag['datetime'])
-            article_datetime = parsed_dt.replace(tzinfo=timezone.utc).isoformat()
-        except ValueError:
-            article_datetime = None
+    # Attempt to find known main content sections
+    section_to_use = (
+            soup.find('section', class_='module--detail-content') or
+            soup.find('section', class_='detail-no-js')
+    )
+    # if the soup has module--detail-content or detail-no-js, scrape with beautifulsoup
+    if section_to_use:
+        # Remove hidden or irrelevant elements
+        for selector in ['[aria-hidden="true"]', '[style*="display:none"]', '.hidden', 'script', 'style', 'noscript']:
+            for tag in soup.select(selector):
+                tag.decompose()
+
+        time_tag = section_to_use.find('time')
+        article_datetime = time_tag.get('datetime') if time_tag and time_tag.has_attr('datetime') else None
+
+        for tag in section_to_use.find_all(True):
+            tag_text = ''.join(tag.find_all(string=True, recursive=False)).strip()
+            normalized_text = neologdn.normalize(tag_text)
+
+            if normalized_text:
+                class_ = ' '.join(tag.get('class')) if tag.has_attr('class') else None
+                parent = tag.find_parent(attrs={'class': True})
+                parent_class = ' '.join(parent.get('class')) if parent else None
+
+                if parent_class == 'content--title' or class_ == 'contentTitle':
+                    article_title = normalized_text
+
+                content.append({
+                    'article_title': article_title,
+                    'published': article_datetime,
+                    'text': normalized_text,
+                    'tag': tag.name,
+                    'class': class_,
+                    'parent_class': parent_class,
+                    'url': url,
+                    'scraped_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+                })
     else:
-        article_datetime = None
+        # fallback to using playwright service for pages with javascript
+        content = scrape_with_playwright(url)
 
-    # Get article text and normalize it
-    for tag in soup.find_all(True):
-        tag_text = ''.join(tag.find_all(string=True, recursive=False)).strip()
-        normalized_text = neologdn.normalize(tag_text)
-
-        if normalized_text:
-            class_ = ' '.join(tag.get('class')) if tag.has_attr('class') else None
-            parent = tag.find_parent(attrs={'class': True})
-            parent_class = ' '.join(parent.get('class')) if parent else None
-
-            if parent_class == 'content--title' or class_ == 'contentTitle':
-                article_title = normalized_text
-
-            content.append({
-                'article_title': article_title,
-                'published': article_datetime,
-                'text': normalized_text,
-                'tag': tag.name,
-                'class': class_,
-                'parent_class': parent_class,
-                'url': url,
-                'scraped_at': datetime.now(timezone.utc).isoformat()
-            })
     return content
 
 def extract_text(articles):
@@ -90,40 +104,10 @@ def extract_text(articles):
 
     for article in articles:
         url = article[1]
-
-        try:
-            # Look at page source
-            soup = get_response(url)
-
-            content_container = soup.select_one('[class*="module--detail-content"], [class*="detail-no-js"]')
-
-            # If the tags are present in source
-           # if soup.select_one('.module--detail-content, .detail-no-js'):
-           #     print("   Required tags found in source. Static scraping. - ", url)
-           #     content.append(scrape_with_beautifulsoup(url, soup))
-           #else:
-           #    print("   Required tags not found in source. Rendered scraping - ", url)
-           #     content.append(fallback_to_playwright(url))
-
-            if content_container:
-                print("   Required tags found in source. Static scraping. - ", url)
-                article_data = scrape_with_beautifulsoup(url, soup)
-                content.append(article_data)
-            else:
-                # Fallback to Playwright if no static container is found
-                print(f"   Info: No static container found. Falling back to Playwright for {url}")
-                article_data = fallback_to_playwright(url) # This function should return data in the same format
-                if article_data:
-                    content.append(article_data)
-
-        except requests.exceptions.RequestException as e:
-            print(f"   Could not fetch URL {url}. Error: {e}")
-        except Exception as e:
-            print(f"   An unexpected error occurred: {e}")
-
+        content.append(scrape_article(url))
     return content
 
-def scrape_NHK():
+def main():
     articles = list_articles(homepage)
     content = extract_text(articles)
     for x in content:
@@ -132,4 +116,18 @@ def scrape_NHK():
     #load_mongo(content)
 
 if __name__ == "__main__":
-    scrape_NHK()
+    #main()
+
+    content = scrape_article('https://www.nhk.or.jp/senkyo/shijiritsu/')
+    #print(content)
+    for x in content:
+        print(x)
+
+    if False:
+        urls = ['https://www3.nhk.or.jp/news/html/20250612/k10014832631000.html', # normal article - module--detail-content
+                'https://www3.nhk.or.jp/news/html/20250610/k10014829951000.html', # WEB 特集 - detail-no-js
+                'https://www.nhk.or.jp/senkyo/shijiritsu/'] # 支持率 - portions rendered with Javascript
+        for url in urls:
+            content = scrape_article(url)
+            for x in content:
+                print(x)

@@ -22,6 +22,8 @@ def parse_special_page_date(text):
 
 
 async def fallback_to_playwright(url):
+    content =[]
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
@@ -50,24 +52,27 @@ async def fallback_to_playwright(url):
                 publication_date = None
 
         scraped_at = datetime.now(timezone.utc).isoformat()
-
         await browser.close()
 
-        return {
-            "article_title": article_title,
-            "published": publication_date,
-            "url": url,
-            "scraped_at": scraped_at,
-            "text": full_text,
-            "tag": "main",  # optional for consistency
-            "class": None,
-            "parent_class": None
-        }
+        for line in full_text.splitlines():
+            if line:
+                content.append({
+                    "article_title": article_title,
+                    "published": publication_date,
+                    "text": line,
+                    "tag": "main",
+                    "class": None,
+                    "parent_class": None,
+                    "url": url,
+                    "scraped_at": scraped_at
+                })
 
+        return content
 
 if __name__ == '__main__':
     url = 'https://www.nhk.or.jp/senkyo/shijiritsu/'
-    result = asyncio.run(scrape_shijiritsu_playwright(url))
-    print(type(result))
+    result = asyncio.run(fallback_to_playwright(url))
     for x in result:
         print(x)
+    #print(result)
+

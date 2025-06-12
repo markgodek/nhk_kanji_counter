@@ -41,10 +41,7 @@ async def scrape_all_text_playwright(url):
 
 if __name__ == '__main__':
     url = 'https://www.nhk.or.jp/senkyo/shijiritsu/'
-    all_text = scrape_all_text(url)
-    for line in all_text:
-        print(line)
-    print('------------------------------------------------')
 
     text = asyncio.run(scrape_all_text_playwright(url))
     print(text)
+
