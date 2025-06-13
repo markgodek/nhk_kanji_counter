@@ -57,10 +57,11 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     MONGO_HOST: mongodb
-    MYSQL_HOST: nhk-mysql
+    MYSQL_HOST: mysql
     PLAYWRIGHT_HOST: playwright
   volumes:
     - ./airflow:/opt/airflow
+    - ./common:/opt/airflow/common
   depends_on:
     redis:
       condition: service_healthy
@@ -192,6 +193,9 @@ services:
       - MONGO_USER=mongo
       - MONGO_PASS=mongo
       - MONGO_HOST=nhk-mongo
+    volumes:
+      - ./show_articles.py:/opt/show_articles.py
+      - ./common:/opt/common
     depends_on:
       - mongodb
 
@@ -201,7 +205,7 @@ services:
       context: .
       dockerfile: Dockerfile.playwright
     volumes:
-      - ./playwright:/app
+      - ./playwright:/opt 
     ports:
       - "5010:5010"
     shm_size: 1g

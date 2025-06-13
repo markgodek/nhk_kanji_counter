@@ -4,3 +4,4 @@
 # keep shared settings
 !.idea/codeStyles/
 !.idea/runConfigurations/
+!.idea/misc.xml

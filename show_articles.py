@@ -1,15 +1,15 @@
 from flask import Flask, request, render_template_string, url_for
-from pymongo import MongoClient
-import os
+from common.mongo_connection import get_mongo_client
+from pymongo.errors import PyMongoError
 
 app = Flask(__name__)
 
-# MongoDB connection
-mongo_user = os.getenv('MONGO_USER', 'mongo')
-mongo_pass = os.getenv('MONGO_PASS', 'mongo')
-mongo_host = os.getenv('MONGO_HOST', 'localhost')
-client = MongoClient(f'mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:27017/')
-db = client["NHK_articles"]
+try:
+    mongo_client = get_mongo_client()
+except PyMongoError as e:
+    print(f"❌ Mongo connection failed: {e}")
+
+db = mongo_client["NHK_articles"]
 collection = db["NHK_articles"]
 
 @app.route("/", methods=["GET", "POST"])

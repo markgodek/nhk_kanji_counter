@@ -1,18 +1,17 @@
-import os
-from pymongo import MongoClient
+from pymongo.errors import PyMongoError
+from common.mongo_connection import get_mongo_client
 
 #input into Docker Desktop to create mongoDB container
 #docker run -p 27017:27017 --name NHK-mongo -d mongo
 
 def load_mongo(content):
-    # Connect to the MongoDB dynamically in container vs debugging locally in PyCharm
-    mongo_user = os.getenv('MONGO_USER', 'mongo')
-    mongo_pass = os.getenv('MONGO_PASS', 'mongo')
-    mongo_host = os.getenv('MONGO_HOST', 'localhost')
-    client = MongoClient(f'mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:27017/')
+    try:
+        mongo_client = get_mongo_client()
+    except PyMongoError as e:
+        print(f"❌ Mongo connection failed: {e}")
 
     # Get or create the database
-    db = client['NHK_articles']
+    db = mongo_client['NHK_articles']
 
     # Get or create the collection
     article_collection = db['NHK_articles']

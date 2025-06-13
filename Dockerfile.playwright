@@ -18,11 +18,10 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 # Set working directory
-WORKDIR /app
+WORKDIR /opt
 
-# Copy files
+# Copy only the requirements
 COPY playwright.requirements.txt ./
-COPY playwright/playwright_service.py ./playwright_service.py
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r playwright.requirements.txt

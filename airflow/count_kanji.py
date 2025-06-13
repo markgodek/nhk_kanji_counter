@@ -1,8 +1,11 @@
 import os, re
-from pymongo import MongoClient
 import mysql.connector
+
 from bson import ObjectId
 from collections import Counter
+from pymongo.errors import PyMongoError
+from common.mongo_connection import get_mongo_client
+
 
 # constants for SQL database
 DB_NAME = 'NHKdb'
@@ -12,41 +15,40 @@ DATA_TABLE = 'nhk_data'
 def get_sql_connection():
     host = os.getenv("MYSQL_HOST", "localhost")
 
-    sql_connection = mysql.connector.connect(
-        host = host,
-        user = 'root',
-        password = 'MyNewPass',
-        database = 'NHKdb',
-        port = 3306
-    )
+    try:
+        sql_connection = mysql.connector.connect(
+            host=host,
+            user='root',
+            password='MyNewPass',
+            database='NHKdb',
+            port=3306
+        )
+        print("✅ Successfully connected to MySQL.")
+    except Exception as e:
+        print("❌ Could not connect to MySQL:", e)
+
     return sql_connection
 
-def get_mongo_client():
-    # Connect to the MongoDB dynamically in container vs debugging locally in PyCharm and return client
-    mongo_host = os.getenv('MONGO_HOST', 'localhost')
-    return MongoClient(f'mongodb://{mongo_host}:27017')
-
 def get_last_processed_id():
-    def get_last_processed_id():
-        try:
-            with get_sql_connection() as sql_connection:
-                with sql_connection.cursor() as cursor:
-                    query = """
-                    SELECT last_processed_id
-                    FROM metadata
-                    ORDER BY processed_at DESC
-                    LIMIT 1;
-                    """
-                    cursor.execute(query)
-                    result = cursor.fetchone()
-                    if result is not None:
-                        return result[0]
-                    else:
-                        return None  # Explicit None if no data
+    try:
+        with get_sql_connection() as sql_connection:
+            with sql_connection.cursor() as cursor:
+                query = """
+                SELECT last_processed_id
+                FROM metadata
+                ORDER BY processed_at DESC
+                LIMIT 1;
+                """
+                cursor.execute(query)
+                result = cursor.fetchone()
+                if result is not None:
+                    return result[0]
+                else:
+                    return None  # Explicit None if no data
 
-        except mysql.connector.Error as err:
-            print(f"Database error while getting last processed ID: {err}")
-            return None
+    except mysql.connector.Error as err:
+        print(f"Database error while getting last processed ID: {err}")
+        return None
 
 def update_last_processed_id(new_id):
     try:
@@ -64,7 +66,11 @@ def update_last_processed_id(new_id):
         print(f"Database error while updating: {err}")
 
 def read_mongo():
-    mongo_client = get_mongo_client() # get a connection
+    try:
+        mongo_client = get_mongo_client()
+    except PyMongoError as e:
+        print(f"❌ Mongo connection failed: {e}")
+
     db = mongo_client['NHK_articles'] # get the database
     collection = db['NHK_articles'] # get the collection
     return collection.find() # return documents
@@ -113,7 +119,12 @@ def process(document):
         print(f"Database error while updating count: {err}")
 
 def batch_process():
-    mongo_client = get_mongo_client()
+    # get MongoDB connection
+    try:
+        mongo_client = get_mongo_client()
+    except PyMongoError as e:
+        print(f"❌ Mongo connection failed: {e}")
+
     db = mongo_client['NHK_articles']
     article_collection = db['NHK_articles']
 
