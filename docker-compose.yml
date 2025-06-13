@@ -47,8 +47,7 @@ x-airflow-common:
     context: .
     dockerfile: Dockerfile
   image: nhk-airflow-custom:latest
-  environment:
-    &airflow-common-env
+  environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: mysql+mysqlconnector://root:MyNewPass@mysql:3306/NHKdb
     AIRFLOW__CELERY__RESULT_BACKEND: db+mysql+mysqlconnector://root:MyNewPass@mysql:3306/NHKdb
@@ -59,6 +58,7 @@ x-airflow-common:
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     MONGO_HOST: mongodb
     MYSQL_HOST: nhk-mysql
+    PLAYWRIGHT_HOST: playwright
   volumes:
     - ./airflow:/opt/airflow
   depends_on:
@@ -108,7 +108,6 @@ services:
     environment:
       <<: *airflow-common-env
       PROJECT_PATH: /opt/airflow
-      MONGO_HOST: nhk-mongo
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 10s
@@ -181,7 +180,7 @@ services:
       - "8082:8081"
     depends_on:
       - mongodb
-        
+
   flask-app:
     container_name: nhk-flask-app
     build:
@@ -195,7 +194,7 @@ services:
       - MONGO_HOST=nhk-mongo
     depends_on:
       - mongodb
-      
+
   playwright:
     container_name: nhk-playwright
     build:
@@ -208,9 +207,6 @@ services:
     shm_size: 1g
     restart: unless-stopped
 
-
-        
 volumes:
   mysql-data:
   mongo-data:
-

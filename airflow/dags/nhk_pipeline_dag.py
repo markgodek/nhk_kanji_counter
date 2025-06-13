@@ -4,7 +4,7 @@ import os
 project_path = os.getenv('PROJECT_PATH')
 sys.path.append(project_path)
 
-from scrapeNHKnews import scrape_NHK
+from scrapeNHKnews import main
 from count_kanji import batch_process
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -27,7 +27,7 @@ with DAG(
     t1 = PythonOperator(
         task_id='task_one',
         depends_on_past=False,
-        python_callable=scrape_NHK
+        python_callable=main
     )
     t2 = PythonOperator(
         task_id='task_two',

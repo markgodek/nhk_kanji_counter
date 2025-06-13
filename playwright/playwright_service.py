@@ -30,7 +30,8 @@ async def fallback_to_playwright(url):
         await page.goto(url)
         await page.wait_for_selector('main', timeout=10000)
 
-        full_text = await page.eval_on_selector('main', 'el => el.innerText')
+        #full_text = await page.eval_on_selector('main', 'el => el.innerText') # scrapes only the text in main
+        full_text = await page.evaluate("() => document.body.innerText") # get all text on the page
         article_title = await page.title()
 
         try:
@@ -55,12 +56,12 @@ async def fallback_to_playwright(url):
         await browser.close()
 
         for line in full_text.splitlines():
-            if line:
+            if line.strip():
                 content.append({
                     "article_title": article_title,
                     "published": publication_date,
-                    "text": line,
-                    "tag": "main",
+                    "text": line.strip(),
+                    "tag": "body",
                     "class": None,
                     "parent_class": None,
                     "url": url,
@@ -80,4 +81,4 @@ def scrape():
     return Response(json.dumps(result, ensure_ascii=False), mimetype='application/json')
 
 if __name__ == "__main__":
-    app.run(port=5010)
+    app.run(host="0.0.0.0", port=5010)
