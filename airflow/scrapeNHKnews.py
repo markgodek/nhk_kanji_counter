@@ -1,4 +1,4 @@
-import os, requests, neologdn
+import os, requests, neologdn, hashlib
 
 from load_mongo import load_mongo
 from bs4 import BeautifulSoup
@@ -78,6 +78,7 @@ def scrape_article(url):
         for tag in section_to_use.find_all(True):
             tag_text = ''.join(tag.find_all(string=True, recursive=False)).strip()
             normalized_text = neologdn.normalize(tag_text)
+            text_hash = hashlib.sha256(normalized_text.encode('utf-8')).hexdigest()
 
             if normalized_text:
                 class_ = ' '.join(tag.get('class')) if tag.has_attr('class') else None
@@ -91,6 +92,7 @@ def scrape_article(url):
                     'article_title': article_title,
                     'published': article_datetime,
                     'text': normalized_text,
+                    'text_hash': text_hash,
                     'tag': tag.name,
                     'class': class_,
                     'parent_class': parent_class,

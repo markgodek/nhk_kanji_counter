@@ -1,5 +1,4 @@
-import os, re
-import mysql.connector
+import os, re, hashlib, mysql.connector
 
 from bson import ObjectId
 from collections import Counter
@@ -50,73 +49,20 @@ def get_last_processed_id():
         print(f"Database error while getting last processed ID: {err}")
         return None
 
-def update_last_processed_id(new_id):
+def update_last_processed_id(cursor, new_id):
     try:
-        with get_sql_connection() as sql_connection:
-            with sql_connection.cursor() as cursor:
-                query = """
-                INSERT INTO metadata (last_processed_id) 
-                VALUES (%s)
-                ON DUPLICATE KEY UPDATE last_processed_id = %s;
-                """
-                cursor.execute(query, (new_id, new_id))
-                sql_connection.commit()
-
+        query = """
+            INSERT INTO metadata (last_processed_id) 
+            VALUES (%s)
+            ON DUPLICATE KEY UPDATE last_processed_id = %s;
+            """
+        cursor.execute(query, (new_id, new_id))
     except mysql.connector.Error as err:
         print(f"Database error while updating: {err}")
-
-def read_mongo():
-    try:
-        mongo_client = get_mongo_client()
-    except PyMongoError as e:
-        print(f"❌ Mongo connection failed: {e}")
-
-    db = mongo_client['NHK_articles'] # get the database
-    collection = db['NHK_articles'] # get the collection
-    return collection.find() # return documents
 
 def count_kanji(document):
     kanji = re.findall(r'[\u4e00-\u9faf]', document['text'])
     return dict(Counter(kanji))
-
-def processx(document):
-    # Get the connection from get_sql_connection
-    sql_connection = get_sql_connection()
-    cursor = sql_connection.cursor()
-    kanji_counts = count_kanji(document)
-    try:
-        query = """
-        INSERT INTO kanji_count (kanji, count)
-        VALUES (%s, %s)
-        ON DUPLICATE KEY UPDATE count = count + %s;
-        """
-
-        for kanji, count in kanji_counts.items():
-            cursor.execute(query, (kanji, count, count))
-
-        sql_connection.commit() # Commit once per document, not per kanji
-    except mysql.connector.Error as err:
-        print(f"Database error while updating count: {err}")
-
-def process(document):
-    # Get the connection from get_sql_connection
-    sql_connection = get_sql_connection()
-    cursor = sql_connection.cursor()
-    kanji_counts = count_kanji(document)
-    try:
-        query = """
-        INSERT INTO kanji_count (kanji, count)
-        VALUES (%s, %s)
-        ON DUPLICATE KEY UPDATE count = count + values(count);
-        """
-
-        # bulk insert using executemany
-        params = [(kanji, count) for kanji, count in kanji_counts.items()]
-        cursor.executemany(query, params)
-
-        sql_connection.commit() # Commit once per document, not per kanji
-    except mysql.connector.Error as err:
-        print(f"Database error while updating count: {err}")
 
 def batch_process():
     # get MongoDB connection
@@ -143,26 +89,50 @@ def batch_process():
                         print("✅ No more documents to process.")
                         break
 
-                    # Aggregate all kanji from the batch
-                    batch_kanji_counter = Counter()
+                    # Prefetch all known hashes from SQL
+                    cursor.execute("SELECT text_hash FROM processed_hashes")
+                    known_hashes = set(row[0] for row in cursor.fetchall())
+                    new_hashes = [] # collect new hashes to insert
+                    batch_kanji_counter = Counter() # Aggregate all kanji from the batch
+
                     for document in batch:
+                        text_hash = document['text_hash']
+
+                        # Check if this hash has already been processed
+                        if text_hash in known_hashes:
+                            continue  # Skip this document
+
+                        # Count kanji and update batch counter
                         kanji_counts = count_kanji(document)
                         batch_kanji_counter.update(kanji_counts)
+
+                        # Add this hash to the processed list
+                        new_hashes.append((text_hash,))
+                        known_hashes.add(text_hash)
+
+                        # Update last processed ID for ordering
                         last_processed_id = str(document["_id"])
                         total_processed += 1
 
-                    # Perform one bulk upsert
+                    # Bulk insert new hashes
+                    if new_hashes:
+                        cursor.executemany(
+                            "INSERT IGNORE INTO processed_hashes (text_hash) VALUES (%s)",
+                            new_hashes
+                        )
+
+                    # Perform bulk insert for all kanji
                     query = """
                     INSERT INTO kanji_count (kanji, count)
                     VALUES (%s, %s)
                     ON DUPLICATE KEY UPDATE count = count + VALUES(count);
                     """
                     params = [(kanji, count) for kanji, count in batch_kanji_counter.items()]
-                    cursor.executemany(query, params)
-                    sql_connection.commit()
 
                     # Save progress after each batch
-                    update_last_processed_id(last_processed_id)
+                    cursor.executemany(query, params)
+                    update_last_processed_id(cursor, last_processed_id)
+                    sql_connection.commit()
                     print(f"✅ Processed {total_processed} documents. Last ID: {last_processed_id}")
 
     except Exception as e:

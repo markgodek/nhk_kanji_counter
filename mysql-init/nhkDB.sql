@@ -15,3 +15,7 @@ CREATE TABLE IF NOT EXISTS metadata (
 	last_processed_id VARCHAR(64) NOT NULL,
 	processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS processed_hashes (
+    text_hash VARCHAR(64) PRIMARY KEY
+);

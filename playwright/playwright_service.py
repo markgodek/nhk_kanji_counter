@@ -1,9 +1,8 @@
+import asyncio, re, json, neologdn, hashlib
+
 from flask import Flask, request, Response
-import asyncio
 from playwright.async_api import async_playwright
 from datetime import datetime, timezone
-import re
-import json
 
 app = Flask(__name__)
 
@@ -57,10 +56,14 @@ async def fallback_to_playwright(url):
 
         for line in full_text.splitlines():
             if line.strip():
+                normalized_text = neologdn.normalize(line.strip())
+                text_hash = hashlib.sha256(normalized_text.encode('utf-8')).hexdigest()
+
                 content.append({
                     "article_title": article_title,
                     "published": publication_date,
-                    "text": line.strip(),
+                    "text": normalized_text,
+                    "text_hash": text_hash,
                     "tag": "body",
                     "class": None,
                     "parent_class": None,
