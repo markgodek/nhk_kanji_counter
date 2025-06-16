@@ -51,12 +51,8 @@ def get_last_processed_id():
 
 def update_last_processed_id(cursor, new_id):
     try:
-        query = """
-            INSERT INTO metadata (last_processed_id) 
-            VALUES (%s)
-            ON DUPLICATE KEY UPDATE last_processed_id = %s;
-            """
-        cursor.execute(query, (new_id, new_id))
+        cursor.execute("DELETE FROM metadata")
+        cursor.execute("INSERT INTO metadata (last_processed_id) VALUES (%s)", (new_id,))
     except mysql.connector.Error as err:
         print(f"Database error while updating: {err}")
 
@@ -65,7 +61,6 @@ def count_kanji(document):
     return dict(Counter(kanji))
 
 def batch_process():
-    # get MongoDB connection
     try:
         mongo_client = get_mongo_client()
     except PyMongoError as e:
@@ -89,51 +84,48 @@ def batch_process():
                         print("✅ No more documents to process.")
                         break
 
-                    # Prefetch all known hashes from SQL
                     cursor.execute("SELECT text_hash FROM processed_hashes")
                     known_hashes = set(row[0] for row in cursor.fetchall())
-                    new_hashes = [] # collect new hashes to insert
-                    batch_kanji_counter = Counter() # Aggregate all kanji from the batch
+
+                    batch_kanji_counter = Counter()
+                    new_hashes = []
+                    total_processed_in_batch = 0
 
                     for document in batch:
                         text_hash = document['text_hash']
 
-                        # Check if this hash has already been processed
                         if text_hash in known_hashes:
-                            continue  # Skip this document
+                            continue
 
-                        # Count kanji and update batch counter
                         kanji_counts = count_kanji(document)
                         batch_kanji_counter.update(kanji_counts)
-
-                        # Add this hash to the processed list
                         new_hashes.append((text_hash,))
                         known_hashes.add(text_hash)
 
-                        # Update last processed ID for ordering
-                        last_processed_id = str(document["_id"])
-                        total_processed += 1
+                        new_last_processed_id = str(document["_id"])
+                        total_processed_in_batch += 1
 
-                    # Bulk insert new hashes
+                    if new_last_processed_id == last_processed_id:
+                        print("No change in processed ID. All documents processed.")
+                        break
+
+                    if batch_kanji_counter:
+                        query = """
+                        INSERT INTO kanji_count (kanji, count)
+                        VALUES (%s, %s)
+                        ON DUPLICATE KEY UPDATE count = count + VALUES(count);
+                        """
+                        params = [(kanji, count) for kanji, count in batch_kanji_counter.items()]
+                        cursor.executemany(query, params)
+
                     if new_hashes:
-                        cursor.executemany(
-                            "INSERT IGNORE INTO processed_hashes (text_hash) VALUES (%s)",
-                            new_hashes
-                        )
+                        cursor.executemany("INSERT IGNORE INTO processed_hashes (text_hash) VALUES (%s)", new_hashes)
 
-                    # Perform bulk insert for all kanji
-                    query = """
-                    INSERT INTO kanji_count (kanji, count)
-                    VALUES (%s, %s)
-                    ON DUPLICATE KEY UPDATE count = count + VALUES(count);
-                    """
-                    params = [(kanji, count) for kanji, count in batch_kanji_counter.items()]
-
-                    # Save progress after each batch
-                    cursor.executemany(query, params)
-                    update_last_processed_id(cursor, last_processed_id)
+                    update_last_processed_id(cursor, new_last_processed_id)
                     sql_connection.commit()
-                    print(f"✅ Processed {total_processed} documents. Last ID: {last_processed_id}")
+
+                    total_processed += total_processed_in_batch
+                    print(f"✅ Processed {total_processed} documents. Last ID: {new_last_processed_id}")
 
     except Exception as e:
         print(f"❌ Error during batch processing: {e}")

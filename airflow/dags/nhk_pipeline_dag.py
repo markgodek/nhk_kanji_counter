@@ -5,7 +5,7 @@ project_path = os.getenv('PROJECT_PATH')
 sys.path.append(project_path)
 
 from scrapeNHKnews import main
-from count_kanji import batch_process
+from load_SQL import batch_process
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago
