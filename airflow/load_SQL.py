@@ -5,7 +5,6 @@ from collections import Counter
 from pymongo.errors import PyMongoError
 from common.mongo_connection import get_mongo_client
 
-
 # constants for SQL database
 DB_NAME = 'NHKdb'
 METADATA_TABLE = 'metadata'
@@ -29,6 +28,7 @@ def get_sql_connection():
     return sql_connection
 
 def get_last_processed_id():
+    print("🔎 Fetching last processed ID from metadata...")
     try:
         with get_sql_connection() as sql_connection:
             with sql_connection.cursor() as cursor:
@@ -41,30 +41,32 @@ def get_last_processed_id():
                 cursor.execute(query)
                 result = cursor.fetchone()
                 if result is not None:
+                    print(f"✅ Last processed ID: {result[0]}")
                     return result[0]
                 else:
-                    return None  # Explicit None if no data
-
+                    print("⚠️ No processed ID found in metadata.")
+                    return None
     except mysql.connector.Error as err:
-        print(f"Database error while getting last processed ID: {err}")
+        print(f"❌ Database error while getting last processed ID: {err}")
         return None
 
 def update_last_processed_id(cursor, new_id):
+    print(f"📝 Updating last processed ID to: {new_id}")
     try:
         cursor.execute("DELETE FROM metadata")
         cursor.execute("INSERT INTO metadata (last_processed_id) VALUES (%s)", (new_id,))
     except mysql.connector.Error as err:
-        print(f"Database error while updating: {err}")
+        print(f"❌ Database error while updating: {err}")
 
 def count_kanji(document):
-    kanji = re.findall(r'[\u4e00-\u9faf]', document['text'])
-    return dict(Counter(kanji))
+    return dict(Counter(re.findall(r'[\u4e00-\u9faf]', document['text'])))
 
 def batch_process():
     try:
         mongo_client = get_mongo_client()
     except PyMongoError as e:
         print(f"❌ Mongo connection failed: {e}")
+        return
 
     db = mongo_client['NHK_articles']
     article_collection = db['NHK_articles']
@@ -89,11 +91,9 @@ def batch_process():
 
                     batch_kanji_counter = Counter()
                     new_hashes = []
-                    total_processed_in_batch = 0
 
                     for document in batch:
                         text_hash = document['text_hash']
-
                         if text_hash in known_hashes:
                             continue
 
@@ -101,13 +101,7 @@ def batch_process():
                         batch_kanji_counter.update(kanji_counts)
                         new_hashes.append((text_hash,))
                         known_hashes.add(text_hash)
-
-                        new_last_processed_id = str(document["_id"])
-                        total_processed_in_batch += 1
-
-                    if new_last_processed_id == last_processed_id:
-                        print("No change in processed ID. All documents processed.")
-                        break
+                        total_processed += 1
 
                     if batch_kanji_counter:
                         query = """
@@ -115,23 +109,26 @@ def batch_process():
                         VALUES (%s, %s)
                         ON DUPLICATE KEY UPDATE count = count + VALUES(count);
                         """
-                        params = [(kanji, count) for kanji, count in batch_kanji_counter.items()]
+                        params = [(k, c) for k, c in batch_kanji_counter.items()]
                         cursor.executemany(query, params)
 
                     if new_hashes:
                         cursor.executemany("INSERT IGNORE INTO processed_hashes (text_hash) VALUES (%s)", new_hashes)
 
-                    update_last_processed_id(cursor, new_last_processed_id)
+                    # Always advance to the last ID in the batch
+                    last_processed_id = str(batch[-1]['_id'])
+                    update_last_processed_id(cursor, last_processed_id)
                     sql_connection.commit()
 
-                    total_processed += total_processed_in_batch
-                    print(f"✅ Processed {total_processed} documents. Last ID: {new_last_processed_id}")
+                    print(f"✅ Processed {total_processed} documents. Last ID: {last_processed_id}")
 
     except Exception as e:
         print(f"❌ Error during batch processing: {e}")
 
     finally:
         print(f"🎉 Done! Total documents processed: {total_processed}")
+
+
 
 if __name__ == "__main__":
     batch_process()

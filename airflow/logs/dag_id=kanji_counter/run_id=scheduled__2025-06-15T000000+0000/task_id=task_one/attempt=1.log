@@ -98,3 +98,103 @@
 [2025-06-16T19:15:50.956+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-06-16T19:15:50.987+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
 [2025-06-16T19:15:50.997+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-06-16T23:22:29.261+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-06-16T23:22:29.299+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:22:29.305+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:22:29.305+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-06-16T23:22:29.319+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_one> on 2025-06-15 00:00:00+00:00
+[2025-06-16T23:22:29.326+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=50) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-06-16T23:22:29.327+0000] {standard_task_runner.py:63} INFO - Started process 51 to run task
+[2025-06-16T23:22:29.328+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_one', 'scheduled__2025-06-15T00:00:00+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmpoofav0p0']
+[2025-06-16T23:22:29.330+0000] {standard_task_runner.py:91} INFO - Job 7: Subtask task_one
+[2025-06-16T23:22:29.374+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2025-06-16T23:22:29.440+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [running]> on host 4e616b22e550
+[2025-06-16T23:22:29.596+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_one' AIRFLOW_CTX_EXECUTION_DATE='2025-06-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-06-15T00:00:00+00:00'
+[2025-06-16T23:22:29.597+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-06-16T23:22:38.925+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2025-06-16T23:22:38.925+0000] {logging_mixin.py:188} INFO - Inserted 393 documents.
+[2025-06-16T23:22:38.925+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-06-16T23:22:38.926+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-06-16T23:22:38.951+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=kanji_counter, task_id=task_one, run_id=scheduled__2025-06-15T00:00:00+00:00, execution_date=20250615T000000, start_date=20250616T232229, end_date=20250616T232238
+[2025-06-16T23:22:38.974+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-06-16T23:22:39.006+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-06-16T23:22:39.011+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-06-16T23:27:11.213+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-06-16T23:27:11.252+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:27:11.259+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:27:11.259+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-06-16T23:27:11.272+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_one> on 2025-06-15 00:00:00+00:00
+[2025-06-16T23:27:11.279+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=79) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-06-16T23:27:11.279+0000] {standard_task_runner.py:63} INFO - Started process 80 to run task
+[2025-06-16T23:27:11.280+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_one', 'scheduled__2025-06-15T00:00:00+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmpnjk7ruoq']
+[2025-06-16T23:27:11.284+0000] {standard_task_runner.py:91} INFO - Job 2: Subtask task_one
+[2025-06-16T23:27:11.320+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2025-06-16T23:27:11.386+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [running]> on host 397128f3126b
+[2025-06-16T23:27:11.531+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_one' AIRFLOW_CTX_EXECUTION_DATE='2025-06-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-06-15T00:00:00+00:00'
+[2025-06-16T23:27:11.532+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-06-16T23:27:20.827+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2025-06-16T23:27:20.827+0000] {logging_mixin.py:188} INFO - Inserted 389 documents.
+[2025-06-16T23:27:20.827+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-06-16T23:27:20.828+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-06-16T23:27:20.854+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=kanji_counter, task_id=task_one, run_id=scheduled__2025-06-15T00:00:00+00:00, execution_date=20250615T000000, start_date=20250616T232711, end_date=20250616T232720
+[2025-06-16T23:27:20.892+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-06-16T23:27:20.926+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-06-16T23:27:20.931+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-06-16T23:41:33.806+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-06-16T23:41:33.845+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:41:33.851+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:41:33.852+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-06-16T23:41:33.868+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_one> on 2025-06-15 00:00:00+00:00
+[2025-06-16T23:41:33.877+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=65) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-06-16T23:41:33.878+0000] {standard_task_runner.py:63} INFO - Started process 66 to run task
+[2025-06-16T23:41:33.879+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_one', 'scheduled__2025-06-15T00:00:00+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmp5zxrxlmn']
+[2025-06-16T23:41:33.880+0000] {standard_task_runner.py:91} INFO - Job 2: Subtask task_one
+[2025-06-16T23:41:33.919+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2025-06-16T23:41:34.028+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [running]> on host 0a98f326b599
+[2025-06-16T23:41:34.212+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_one' AIRFLOW_CTX_EXECUTION_DATE='2025-06-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-06-15T00:00:00+00:00'
+[2025-06-16T23:41:34.214+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-06-16T23:41:44.655+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2025-06-16T23:41:44.656+0000] {logging_mixin.py:188} INFO - Inserted 349 documents.
+[2025-06-16T23:41:44.657+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-06-16T23:41:44.657+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-06-16T23:41:44.684+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=kanji_counter, task_id=task_one, run_id=scheduled__2025-06-15T00:00:00+00:00, execution_date=20250615T000000, start_date=20250616T234133, end_date=20250616T234144
+[2025-06-16T23:41:44.717+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-06-16T23:41:44.751+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-06-16T23:41:44.757+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-06-16T23:54:07.226+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-06-16T23:54:07.262+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:54:07.268+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [queued]>
+[2025-06-16T23:54:07.268+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-06-16T23:54:07.283+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_one> on 2025-06-15 00:00:00+00:00
+[2025-06-16T23:54:07.290+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=86) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-06-16T23:54:07.291+0000] {standard_task_runner.py:63} INFO - Started process 87 to run task
+[2025-06-16T23:54:07.292+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_one', 'scheduled__2025-06-15T00:00:00+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmp5sse_3or']
+[2025-06-16T23:54:07.294+0000] {standard_task_runner.py:91} INFO - Job 2: Subtask task_one
+[2025-06-16T23:54:07.333+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2025-06-16T23:54:07.398+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_one scheduled__2025-06-15T00:00:00+00:00 [running]> on host 297feeff3022
+[2025-06-16T23:54:07.543+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_one' AIRFLOW_CTX_EXECUTION_DATE='2025-06-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-06-15T00:00:00+00:00'
+[2025-06-16T23:54:07.544+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-06-16T23:54:16.225+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2025-06-16T23:54:16.226+0000] {logging_mixin.py:188} INFO - Inserted 385 documents.
+[2025-06-16T23:54:16.226+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-06-16T23:54:16.227+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-06-16T23:54:16.253+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=kanji_counter, task_id=task_one, run_id=scheduled__2025-06-15T00:00:00+00:00, execution_date=20250615T000000, start_date=20250616T235407, end_date=20250616T235416
+[2025-06-16T23:54:16.306+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-06-16T23:54:16.338+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-06-16T23:54:16.343+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
