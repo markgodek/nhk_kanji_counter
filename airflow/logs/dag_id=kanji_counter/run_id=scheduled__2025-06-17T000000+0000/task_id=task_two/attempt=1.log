@@ -1,0 +1,31 @@
+[2025-06-18T19:49:45.011+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-06-18T19:49:45.051+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_two scheduled__2025-06-17T00:00:00+00:00 [queued]>
+[2025-06-18T19:49:45.058+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_two scheduled__2025-06-17T00:00:00+00:00 [queued]>
+[2025-06-18T19:49:45.059+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-06-18T19:49:45.075+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_two> on 2025-06-17 00:00:00+00:00
+[2025-06-18T19:49:45.083+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=126) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-06-18T19:49:45.084+0000] {standard_task_runner.py:63} INFO - Started process 127 to run task
+[2025-06-18T19:49:45.085+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_two', 'scheduled__2025-06-17T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmp67zq5z4p']
+[2025-06-18T19:49:45.087+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask task_two
+[2025-06-18T19:49:45.123+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2025-06-18T19:49:45.197+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_two scheduled__2025-06-17T00:00:00+00:00 [running]> on host fc3c6a32b0db
+[2025-06-18T19:49:45.363+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_two' AIRFLOW_CTX_EXECUTION_DATE='2025-06-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-06-17T00:00:00+00:00'
+[2025-06-18T19:49:45.365+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-06-18T19:49:45.401+0000] {logging_mixin.py:188} INFO - 🔎 Fetching last processed ID from metadata...
+[2025-06-18T19:49:45.433+0000] {logging_mixin.py:188} INFO - ✅ Successfully connected to MySQL.
+[2025-06-18T19:49:45.435+0000] {logging_mixin.py:188} INFO - ⚠️ No processed ID found in metadata.
+[2025-06-18T19:49:45.471+0000] {logging_mixin.py:188} INFO - ✅ Successfully connected to MySQL.
+[2025-06-18T19:49:45.547+0000] {logging_mixin.py:188} INFO - 📝 Updating last processed ID to: 685318582a4674e9244f66d9
+[2025-06-18T19:49:45.553+0000] {logging_mixin.py:188} INFO - ✅ Processed 385 documents. Last ID: 685318582a4674e9244f66d9
+[2025-06-18T19:49:45.555+0000] {logging_mixin.py:188} INFO - ✅ No more documents to process.
+[2025-06-18T19:49:45.556+0000] {logging_mixin.py:188} INFO - 🎉 Done! Total documents processed: 385
+[2025-06-18T19:49:45.558+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-06-18T19:49:45.559+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-06-18T19:49:45.588+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=kanji_counter, task_id=task_two, run_id=scheduled__2025-06-17T00:00:00+00:00, execution_date=20250617T000000, start_date=20250618T194945, end_date=20250618T194945
+[2025-06-18T19:49:45.618+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-06-18T19:49:45.656+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-06-18T19:49:45.658+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
