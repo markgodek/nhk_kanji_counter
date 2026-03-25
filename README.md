@@ -1,0 +1,1 @@
+#A project which uses a containerized Airflow pipeline to scrape the NHK news website, store sentences in a Mongo database, then count the incidence of each kanji character and update the corresponding value within a MySQL database. The most frequent kanji are served to a simple website using Flask.
