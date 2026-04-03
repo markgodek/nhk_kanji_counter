@@ -1,0 +1,137 @@
+[2026-04-03T18:40:17.248+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-04-03T18:40:17.280+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_one manual__2026-04-03T18:40:15.308161+00:00 [queued]>
+[2026-04-03T18:40:17.288+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_one manual__2026-04-03T18:40:15.308161+00:00 [queued]>
+[2026-04-03T18:40:17.290+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-04-03T18:40:17.309+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_one> on 2026-04-03 18:40:15.308161+00:00
+[2026-04-03T18:40:17.313+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1511) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-03T18:40:17.315+0000] {standard_task_runner.py:63} INFO - Started process 1512 to run task
+[2026-04-03T18:40:17.315+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_one', 'manual__2026-04-03T18:40:15.308161+00:00', '--job-id', '14', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmp9ngzejyd']
+[2026-04-03T18:40:17.317+0000] {standard_task_runner.py:91} INFO - Job 14: Subtask task_one
+[2026-04-03T18:40:17.356+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-03T18:40:17.419+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_one manual__2026-04-03T18:40:15.308161+00:00 [running]> on host b11942d3304d
+[2026-04-03T18:40:17.569+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_one' AIRFLOW_CTX_EXECUTION_DATE='2026-04-03T18:40:15.308161+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-03T18:40:15.308161+00:00'
+[2026-04-03T18:40:17.571+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-04-03T18:40:17.580+0000] {logging_mixin.py:188} INFO - Fetching homepage links from https://news.web.nhk/newsweb...
+[2026-04-03T18:40:54.816+0000] {logging_mixin.py:188} INFO - ✅ Found 28 articles to scrape.
+[2026-04-03T18:40:54.817+0000] {logging_mixin.py:188} INFO - [1/28] Scraping: 商船三井LNG運搬船ホルムズ海峡通過軍事作戦後日本関係で初
+[2026-04-03T18:41:20.636+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:41:20.637+0000] {logging_mixin.py:188} INFO - Inserted 95 documents.
+[2026-04-03T18:41:20.638+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:41:20.639+0000] {logging_mixin.py:188} INFO - [2/28] Scraping: 発電向け燃料確保に懸念夏に向け需給見通し示す取り組み開始
+[2026-04-03T18:41:44.334+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:41:44.335+0000] {logging_mixin.py:188} INFO - Inserted 94 documents.
+[2026-04-03T18:41:44.336+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:41:44.337+0000] {logging_mixin.py:188} INFO - [3/28] Scraping: 渋谷スクランブル交差点路上に火50代男が警察署に出頭
+[2026-04-03T18:42:09.116+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:42:09.117+0000] {logging_mixin.py:188} INFO - Inserted 97 documents.
+[2026-04-03T18:42:09.118+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:42:09.118+0000] {logging_mixin.py:188} INFO - [4/28] Scraping: スカイマーク来年春にも国内線に燃油サーチャージ導入を検討
+[2026-04-03T18:42:35.262+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:42:35.263+0000] {logging_mixin.py:188} INFO - Inserted 97 documents.
+[2026-04-03T18:42:35.264+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:42:35.264+0000] {logging_mixin.py:188} INFO - [5/28] Scraping: 米3月雇用統計就業者は前月比17万8000人増減速懸念和らぐ
+[2026-04-03T18:43:01.589+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:43:01.590+0000] {logging_mixin.py:188} INFO - Inserted 95 documents.
+[2026-04-03T18:43:01.591+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:43:01.591+0000] {logging_mixin.py:188} INFO - [6/28] Scraping: 北九州若松区3歳女児が車にはねられ死亡
+[2026-04-03T18:43:27.950+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:43:27.951+0000] {logging_mixin.py:188} INFO - Inserted 97 documents.
+[2026-04-03T18:43:27.952+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:43:27.952+0000] {logging_mixin.py:188} INFO - [7/28] Scraping: 毎日新聞社元取締役のセクハラ行為を発表
+[2026-04-03T18:43:53.221+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:43:53.222+0000] {logging_mixin.py:188} INFO - Inserted 93 documents.
+[2026-04-03T18:43:53.223+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:43:53.223+0000] {logging_mixin.py:188} INFO - [8/28] Scraping: 【全文】フランスマクロン大統領インタビュー
+[2026-04-03T18:44:17.585+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:44:17.586+0000] {logging_mixin.py:188} INFO - Inserted 100 documents.
+[2026-04-03T18:44:17.587+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:44:17.587+0000] {logging_mixin.py:188} INFO - [9/28] Scraping: 住宅ローン金利上昇で新たなリスク
+[2026-04-03T18:44:44.245+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:44:44.245+0000] {logging_mixin.py:188} INFO - Inserted 97 documents.
+[2026-04-03T18:44:44.246+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:44:44.246+0000] {logging_mixin.py:188} INFO - [10/28] Scraping: 米ケロッグ元特使が語る停戦のジレンマ
+[2026-04-03T18:45:10.630+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:45:10.631+0000] {logging_mixin.py:188} INFO - Inserted 101 documents.
+[2026-04-03T18:45:10.632+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:45:10.632+0000] {logging_mixin.py:188} INFO - [11/28] Scraping: 岡本和真・村上宗隆のメジャー挑戦を松井稼頭央が徹底分析
+[2026-04-03T18:45:36.135+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:45:36.136+0000] {logging_mixin.py:188} INFO - Inserted 104 documents.
+[2026-04-03T18:45:36.137+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:45:36.138+0000] {logging_mixin.py:188} INFO - [12/28] Scraping: 学びに“AI"どこまでアリ?ためになる使い方は
+[2026-04-03T18:46:02.566+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:46:02.567+0000] {logging_mixin.py:188} INFO - Inserted 85 documents.
+[2026-04-03T18:46:02.568+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:46:02.569+0000] {logging_mixin.py:188} INFO - [13/28] Scraping: もう限界!博物館に忍び寄る“廃棄の危機"
+[2026-04-03T18:46:27.664+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:46:27.665+0000] {logging_mixin.py:188} INFO - Inserted 90 documents.
+[2026-04-03T18:46:27.666+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:46:27.667+0000] {logging_mixin.py:188} INFO - [14/28] Scraping: “あした"を奪われた息子加害者と向き合った両親の思いとは
+[2026-04-03T18:46:52.910+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:46:52.911+0000] {logging_mixin.py:188} INFO - Inserted 93 documents.
+[2026-04-03T18:46:52.911+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:46:52.912+0000] {logging_mixin.py:188} INFO - [15/28] Scraping: 原油高にどう対応?石油危機の経験から考える【経済コラム】
+[2026-04-03T18:47:19.135+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:47:19.136+0000] {logging_mixin.py:188} INFO - Inserted 93 documents.
+[2026-04-03T18:47:19.137+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:47:19.138+0000] {logging_mixin.py:188} INFO - [16/28] Scraping: コクヨ黒田英邦社長「世界一風通しの良い会社をつくる」
+[2026-04-03T18:47:44.787+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:47:44.788+0000] {logging_mixin.py:188} INFO - Inserted 96 documents.
+[2026-04-03T18:47:44.788+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:47:44.789+0000] {logging_mixin.py:188} INFO - [17/28] Scraping: “梅の産地"誇り胸にマカダミアナッツ栽培への挑戦
+[2026-04-03T18:48:11.141+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:48:11.142+0000] {logging_mixin.py:188} INFO - Inserted 93 documents.
+[2026-04-03T18:48:11.143+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:48:11.144+0000] {logging_mixin.py:188} INFO - [18/28] Scraping: WFP事務局次長イラン情勢で「支援できる人数減る」と危機感
+[2026-04-03T18:48:35.787+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:48:35.788+0000] {logging_mixin.py:188} INFO - Inserted 98 documents.
+[2026-04-03T18:48:35.789+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:48:35.789+0000] {logging_mixin.py:188} INFO - [19/28] Scraping: 共産田村委員長イラン情勢対応めぐり木原官房長官に要請
+[2026-04-03T18:49:00.910+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:49:00.911+0000] {logging_mixin.py:188} INFO - Inserted 96 documents.
+[2026-04-03T18:49:00.912+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:49:00.913+0000] {logging_mixin.py:188} INFO - [20/28] Scraping: 米軍がテヘラン郊外の橋を攻撃イラン側反発徹底抗戦の構え
+[2026-04-03T18:49:27.250+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:49:27.251+0000] {logging_mixin.py:188} INFO - Inserted 103 documents.
+[2026-04-03T18:49:27.252+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:49:27.252+0000] {logging_mixin.py:188} INFO - [21/28] Scraping: 企業向け高圧の電力供給新たな契約一時停止もイラン情勢で
+[2026-04-03T18:49:51.671+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:49:51.671+0000] {logging_mixin.py:188} INFO - Inserted 103 documents.
+[2026-04-03T18:49:51.672+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:49:51.672+0000] {logging_mixin.py:188} INFO - [22/28] Scraping: 開戦から1か月イランをめぐる戦争の行方
+[2026-04-03T18:50:18.180+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:50:18.181+0000] {logging_mixin.py:188} INFO - Inserted 101 documents.
+[2026-04-03T18:50:18.182+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:50:18.183+0000] {logging_mixin.py:188} INFO - [23/28] Scraping: 高市首相経産相厚労相に石油製品などの安定確保を改めて指示
+[2026-04-03T18:50:43.618+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:50:43.619+0000] {logging_mixin.py:188} INFO - Inserted 95 documents.
+[2026-04-03T18:50:43.619+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:50:43.620+0000] {logging_mixin.py:188} INFO - [24/28] Scraping: 円相場1ドル=159円台半ば中心に小幅な値動き
+[2026-04-03T18:51:09.197+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:51:09.198+0000] {logging_mixin.py:188} INFO - Inserted 103 documents.
+[2026-04-03T18:51:09.199+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:51:09.200+0000] {logging_mixin.py:188} INFO - [25/28] Scraping: 富士山大噴火で首都圏にも被害?火山灰の脅威に備える
+[2026-04-03T18:51:34.766+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:51:34.767+0000] {logging_mixin.py:188} INFO - Inserted 71 documents.
+[2026-04-03T18:51:34.768+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:51:34.769+0000] {logging_mixin.py:188} INFO - [26/28] Scraping: 北陸電力志賀原発敷地内に活断層“存在しない"改めて説明へ
+[2026-04-03T18:52:00.332+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:52:00.333+0000] {logging_mixin.py:188} INFO - Inserted 95 documents.
+[2026-04-03T18:52:00.334+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:52:00.335+0000] {logging_mixin.py:188} INFO - [27/28] Scraping: 【プロ野球結果】ロッテがサヨナラ勝ち試合のニュース動画も
+[2026-04-03T18:52:24.749+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:52:24.750+0000] {logging_mixin.py:188} INFO - Inserted 95 documents.
+[2026-04-03T18:52:24.750+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:52:24.751+0000] {logging_mixin.py:188} INFO - [28/28] Scraping: クマ対策方針を転換「保護重視」から「個体数管理の強化」へ
+[2026-04-03T18:52:50.057+0000] {logging_mixin.py:188} INFO - Article collection created!
+[2026-04-03T18:52:50.058+0000] {logging_mixin.py:188} INFO - Inserted 99 documents.
+[2026-04-03T18:52:50.059+0000] {logging_mixin.py:188} INFO -   -> Successfully loaded into MongoDB.
+[2026-04-03T18:52:50.060+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-04-03T18:52:50.061+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-04-03T18:52:50.086+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=kanji_counter, task_id=task_one, run_id=manual__2026-04-03T18:40:15.308161+00:00, execution_date=20260403T184015, start_date=20260403T184017, end_date=20260403T185250
+[2026-04-03T18:52:50.119+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-04-03T18:52:50.148+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-04-03T18:52:50.158+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

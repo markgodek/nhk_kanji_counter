@@ -1,0 +1,35 @@
+[2026-04-03T18:52:50.986+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-04-03T18:52:51.015+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_two manual__2026-04-03T18:40:15.308161+00:00 [queued]>
+[2026-04-03T18:52:51.022+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_two manual__2026-04-03T18:40:15.308161+00:00 [queued]>
+[2026-04-03T18:52:51.025+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-04-03T18:52:51.045+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_two> on 2026-04-03 18:40:15.308161+00:00
+[2026-04-03T18:52:51.049+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=2042) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-03T18:52:51.051+0000] {standard_task_runner.py:63} INFO - Started process 2043 to run task
+[2026-04-03T18:52:51.051+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_two', 'manual__2026-04-03T18:40:15.308161+00:00', '--job-id', '15', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmp_cmc_jpk']
+[2026-04-03T18:52:51.053+0000] {standard_task_runner.py:91} INFO - Job 15: Subtask task_two
+[2026-04-03T18:52:51.091+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-03T18:52:51.148+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_two manual__2026-04-03T18:40:15.308161+00:00 [running]> on host b11942d3304d
+[2026-04-03T18:52:51.282+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_two' AIRFLOW_CTX_EXECUTION_DATE='2026-04-03T18:40:15.308161+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-03T18:40:15.308161+00:00'
+[2026-04-03T18:52:51.284+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-04-03T18:52:51.320+0000] {logging_mixin.py:188} INFO - 🔎 Fetching last processed ID from metadata...
+[2026-04-03T18:52:51.340+0000] {logging_mixin.py:188} INFO - ✅ Successfully connected to MySQL.
+[2026-04-03T18:52:51.341+0000] {logging_mixin.py:188} INFO - ✅ Last processed ID: 69d0072b588edf05611db236
+[2026-04-03T18:52:51.360+0000] {logging_mixin.py:188} INFO - ✅ Successfully connected to MySQL.
+[2026-04-03T18:52:51.380+0000] {logging_mixin.py:188} INFO - 📝 Updating last processed ID to: 69d00ad042afd8056a24cb7a
+[2026-04-03T18:52:51.391+0000] {logging_mixin.py:188} INFO - ✅ Processed 0 documents. Last ID: 69d00ad042afd8056a24cb7a
+[2026-04-03T18:52:51.397+0000] {logging_mixin.py:188} INFO - 📝 Updating last processed ID to: 69d00bcf42afd8056a24cf6c
+[2026-04-03T18:52:51.403+0000] {logging_mixin.py:188} INFO - ✅ Processed 0 documents. Last ID: 69d00bcf42afd8056a24cf6c
+[2026-04-03T18:52:51.408+0000] {logging_mixin.py:188} INFO - 📝 Updating last processed ID to: 69d00c8242afd8056a24d21a
+[2026-04-03T18:52:51.415+0000] {logging_mixin.py:188} INFO - ✅ Processed 0 documents. Last ID: 69d00c8242afd8056a24d21a
+[2026-04-03T18:52:51.417+0000] {logging_mixin.py:188} INFO - ✅ No more documents to process.
+[2026-04-03T18:52:51.418+0000] {logging_mixin.py:188} INFO - 🎉 Done! Total documents processed: 0
+[2026-04-03T18:52:51.419+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-04-03T18:52:51.419+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-04-03T18:52:51.443+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=kanji_counter, task_id=task_two, run_id=manual__2026-04-03T18:40:15.308161+00:00, execution_date=20260403T184015, start_date=20260403T185251, end_date=20260403T185251
+[2026-04-03T18:52:51.466+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-04-03T18:52:51.492+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-03T18:52:51.494+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -1,0 +1,50 @@
+[2026-04-02T17:37:09.141+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-04-02T17:37:09.174+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2026-04-01T00:00:00+00:00 [queued]>
+[2026-04-02T17:37:09.180+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: kanji_counter.task_one scheduled__2026-04-01T00:00:00+00:00 [queued]>
+[2026-04-02T17:37:09.183+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-04-02T17:37:09.202+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): task_one> on 2026-04-01 00:00:00+00:00
+[2026-04-02T17:37:09.207+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=76) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-02T17:37:09.208+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'kanji_counter', 'task_one', 'scheduled__2026-04-01T00:00:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/nhk_pipeline_dag.py', '--cfg-path', '/tmp/tmpspwb8k4i']
+[2026-04-02T17:37:09.210+0000] {standard_task_runner.py:63} INFO - Started process 77 to run task
+[2026-04-02T17:37:09.211+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask task_one
+[2026-04-02T17:37:09.250+0000] {warnings.py:110} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/settings.py:195: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-02T17:37:09.317+0000] {task_command.py:426} INFO - Running <TaskInstance: kanji_counter.task_one scheduled__2026-04-01T00:00:00+00:00 [running]> on host 5cf26d93e431
+[2026-04-02T17:37:09.471+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='kanji_counter' AIRFLOW_CTX_TASK_ID='task_one' AIRFLOW_CTX_EXECUTION_DATE='2026-04-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-04-01T00:00:00+00:00'
+[2026-04-02T17:37:09.472+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-04-02T17:37:10.081+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-04-02T17:37:10.083+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/scrapeNHKnews.py", line 117, in main
+    articles = list_articles(homepage)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/scrapeNHKnews.py", line 27, in list_articles
+    soup = get_response(homepage)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/scrapeNHKnews.py", line 21, in get_response
+    response.raise_for_status()
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://news.web.nhk/newsweb
+[2026-04-02T17:37:10.118+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=kanji_counter, task_id=task_one, run_id=scheduled__2026-04-01T00:00:00+00:00, execution_date=20260401T000000, start_date=20260402T173709, end_date=20260402T173710
+[2026-04-02T17:37:10.138+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 6 for task task_one (403 Client Error: Forbidden for url: https://news.web.nhk/newsweb; 77)
+[2026-04-02T17:37:10.149+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-04-02T17:37:10.179+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
